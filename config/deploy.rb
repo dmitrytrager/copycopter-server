@@ -1,10 +1,13 @@
+$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+require 'rvm/capistrano'
 require 'bundler/capistrano'
 
 server "78.47.150.54", :web, :app, :db, primary: true
 
 set :application, "copycopter-server"
 set :user, "deployer"
-set :deploy_to, "/home/#{user}/code/#{application}"
+set :rails_env, "production"
+set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo,  false
 
@@ -18,6 +21,12 @@ ssh_options[:forward_agent] = true
 after "deploy", "deploy:cleanup"
 
 namespace :deploy do
+  task :start do ; end
+  task :stop do ; end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
+
   task :setup_config, roles: :app do
     run "mkdir -p #{shared_path}/config"
     put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
