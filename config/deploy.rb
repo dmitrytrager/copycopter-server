@@ -2,10 +2,10 @@ $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
 require 'bundler/capistrano'
 
-server "78.47.150.54", :web, :app, :db, primary: true
+server "78.47.50.178", :web, :app, :db, primary: true
 
 set :application, "copycopter-server"
-set :user, "deployer"
+set :user, "deploy"
 set :rails_env, "production"
 set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
