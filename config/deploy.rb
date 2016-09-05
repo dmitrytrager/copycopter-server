@@ -1,5 +1,5 @@
-require 'rvm/capistrano'
-require 'bundler/capistrano'
+require "capistrano/rvm"
+require "capistrano/bundler"
 
 server "78.47.50.178", :web, :app, :db, primary: true
 
@@ -14,6 +14,8 @@ set :scm, :git
 set :repository, "git@github.com:dmitrytrager/#{application}.git"
 set :branch, :master
 
+set :conditionally_migrate, true
+
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
@@ -23,7 +25,7 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+    invoke "unicorn:reload"
   end
 
   task :setup_config, roles: :app do
