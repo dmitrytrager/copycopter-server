@@ -1,33 +1,11 @@
 set :application, "copycopter-server"
-set :port, 22
-set :user, "deploy"
-set :rails_env, "production"
-set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
-set :deploy_via, :remote_cache
-set :use_sudo, false
+
 set :bundle_binstubs, nil
-
-server "78.47.50.178",
-  roles: [:web, :app, :db],
-  port: fetch(:port),
-  user: fetch(:user),
-  primary: true
-
 set :scm, :git
 # set :repository, "git@github.com:dmitrytrager/#{fetch(:application)}.git"
 set :repo_url, "git@github.com:dmitrytrager/#{fetch(:application)}.git"
 # set :branch, :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-
-set :conditionally_migrate, true
-set :pry, true
-
-# ssh_options[:forward_agent] = true
-set :ssh_options, {
-  forward_agent: true,
-  auth_methods: %w(publickey),
-  user: "deploy",
-}
 
 set :linked_files, fetch(:linked_files, []).push("config/database.yml")
 set :linked_dirs,
