@@ -1,10 +1,10 @@
 root_dir = "/home/deploy/apps/copycopter-server/current"
 working_directory root_dir
 
-pid "#{root}/tmp/pids/unicorn.pid"
+pid "#{root_dir}/tmp/pids/unicorn.pid"
 
-stderr_path "#{root}/log/unicorn.log"
-stdout_path "#{root}/log/unicorn.log"
+stderr_path "#{root_dir}/log/unicorn.log"
+stdout_path "#{root_dir}/log/unicorn.log"
 
 worker_processes Integer(ENV["WEB_CONCURRENCY"])
 timeout 30
@@ -34,5 +34,5 @@ end
 # Force the bundler gemfile environment variable to
 # reference the capistrano "current" symlink
 before_exec do |_|
-  ENV["BUNDLE_GEMFILE"] = File.join(root, "Gemfile")
+  ENV["BUNDLE_GEMFILE"] = File.join(root_dir, "Gemfile")
 end
