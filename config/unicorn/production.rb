@@ -6,7 +6,7 @@ pid "#{root_dir}/tmp/pids/unicorn.pid"
 stderr_path "#{root_dir}/log/unicorn.log"
 stdout_path "#{root_dir}/log/unicorn.log"
 
-worker_processes Integer(ENV["WEB_CONCURRENCY"])
+worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 timeout 30
 preload_app true
 
