@@ -41,3 +41,7 @@ group :test do
   gem "shoulda-matchers", "1.0.0"
   gem "timecop", "0.3.5"
 end
+
+group :production do
+  gem "unicorn"
+end
