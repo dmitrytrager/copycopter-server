@@ -5,7 +5,7 @@ set :scm, :git
 # set :repository, "git@github.com:dmitrytrager/#{fetch(:application)}.git"
 set :repo_url, "git@github.com:dmitrytrager/#{fetch(:application)}.git"
 # set :branch, :master
-ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 set :linked_files, fetch(:linked_files, []).push("config/database.yml")
 set :linked_dirs,
