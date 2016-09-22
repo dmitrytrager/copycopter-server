@@ -8,8 +8,8 @@ end
 
 module Copycopter
   class Application < Rails::Application
-    # config.action_view.javascript_expansions[:defaults] = %w()
-    config.autoload_paths += %W(#{Rails.root.join('lib').to_s})
+    config.action_view.javascript_expansions[:defaults] = %w()
+    config.autoload_paths << Rails.root.join('lib').to_s
     config.eager_load_paths += %w(lib)
     config.encoding = 'utf-8'
     config.filter_parameters += [:password]
