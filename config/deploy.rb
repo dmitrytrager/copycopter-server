@@ -18,24 +18,20 @@ set :linked_dirs,
     "public/system"
   )
 
-after "deploy", "deploy:cleanup"
-after "deploy:publishing", "deploy:restart"
-
 namespace :deploy do
-  task :start do
-  end
-
-  task :stop do
-  end
-
+  desc "Restart application"
   task :restart do
-    on roles(:app), except: { no_release: true } do
-      invoke "unicorn:reload"
+    on roles(:app), except: { no_release: true }, in: :sequence, wait: 5 do
+      invoke "unicorn:restart"
     end
   end
 
+  after :finishing, :compile_assets
+  after :finishing, :cleanup
+  after :finishing, :restart
+
   desc "Make sure local git is in sync with remote"
-  task "check_revision" do
+  task :check_revision do
     on roles(:web) do
       unless `git rev-parse HEAD` == `git rev-parse origin/master`
         puts "WARNING: HEAD is not the same as origin/master"
@@ -44,5 +40,5 @@ namespace :deploy do
       end
     end
   end
-  before "deploy", "deploy:check_revision"
+  before :starting, :check_revision
 end

@@ -15,7 +15,7 @@ set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 set :ssh_options, {
   forward_agent: true,
   auth_methods: %w(publickey),
-  user: "deploy",
+  user: "deploy"
 }
 
 set :rails_env, "production"
